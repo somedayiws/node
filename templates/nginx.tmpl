@@ -1,0 +1,35 @@
+erver {
+        server_name localhost;
+        listen 80;
+
+        {{ range $index, $value := $ }}
+        	{{ if (not $value.Env.IgnoreLocation) }}
+				{{ if $value.Env.ForceRoot }}
+					location / {
+				{{ else  }}
+					location /{{ $value.Name }}/ {
+				{{ end }}
+					{{ $addrLen := len $value.Addresses }}
+
+					{{ if $value.Env.CQRS }}
+							add_header 'Access-Control-Allow-Origin' '*' always;
+							add_header 'Access-Control-Allow-Credentials' 'true' always;
+							add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+							add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+
+							if ($request_method = OPTIONS ) {
+								  return 200 '';
+							}
+					{{ end }}
+					{{ if eq $addrLen 1 }}
+							{{ $address := index $value.Addresses 0 }}
+							proxy_pass http://{{ $address.IP }}:{{ $address.Port }}/;
+					{{ else }}
+							{{ $port := coalesce $value.Env.VIRTUAL_PORT "80" }}
+							{{ $address := where $value.Addresses "Port" $port | first }}
+							proxy_pass http://{{ $address.IP }}:{{ $address.Port }}/;
+					{{ end }}
+				}
+			{{ end }}
+        {{ end }}
+}
