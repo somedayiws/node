@@ -2,7 +2,10 @@
 
 node {
 
-
+withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
+		accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+		credentialsId: 'aws',
+		secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 		def branch = env.BRANCH_NAME
 		def imageName = 'user-management'
 		def imageTag = ''
@@ -13,8 +16,13 @@ node {
 			env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
 			sh 'java -version'
 
-			// Checkout branch
-			// Need to set LocalBranch extension, since: https://stackoverflow.com/questions/44006070/jenkins-gitscm-finishes-the-clone-in-a-detached-head-state-how-can-i-make-sure
+			awsId = awsIdentity()
+
+			id = readJSON text: awsId
+
+			println 'id: $id'
+
 		}
+	}
 
 }
