@@ -8,9 +8,6 @@ node {
 		def imageTag = ''
 
 		stage('PREPARATION') {
-			// Delete all images, which have been built before!
-			sh returnStatus: true, script: 'docker rmi -f $(docker images -q)'
-
 			// Setup Java
 			env.JAVA_HOME="${tool 'Java8'}"
 			env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
@@ -33,7 +30,7 @@ node {
 				submoduleCfg: [],
 				userRemoteConfigs: [
 					[
-						credentialsId: '314bae8b-b71a-42d7-955b-0d4d1e7ae67e',
+						credentialsId: '2314bae8b-b71a-42d7-955b-0d4d1e7ae67e',
 						url: 'https://github.com/somedayiws/node.git'
 					]
 				]
