@@ -15,20 +15,6 @@ node {
 
 			// Checkout branch
 			// Need to set LocalBranch extension, since: https://stackoverflow.com/questions/44006070/jenkins-gitscm-finishes-the-clone-in-a-detached-head-state-how-can-i-make-sure
-			checkout([$class: 'GitSCM',
-				branches: [
-					[
-						name: "*/develop"
-					]
-				],
-				doGenerateSubmoduleConfigurations: false,
-				extensions: [],
-				extensions: [
-					[$class: 'CleanBeforeCheckout'],
-					[$class: 'LocalBranch', localBranch: "**"]
-				],
-				submoduleCfg: []
-			])
 		}
 
 }
