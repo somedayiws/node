@@ -27,12 +27,7 @@ node {
 					[$class: 'CleanBeforeCheckout'],
 					[$class: 'LocalBranch', localBranch: "**"]
 				],
-				submoduleCfg: [],
-				userRemoteConfigs: [
-					[
-						credentialsId: '2314bae8b-b71a-42d7-955b-0d4d1e7ae67e',
-						url: 'https://github.com/somedayiws/node.git'
-					]
+				submoduleCfg: []
 				]
 			])
 		}
