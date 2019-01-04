@@ -18,7 +18,7 @@ node {
 			checkout([$class: 'GitSCM',
 				branches: [
 					[
-						name: "*/$branch"
+						name: "*/develop"
 					]
 				],
 				doGenerateSubmoduleConfigurations: false,
