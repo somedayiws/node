@@ -28,7 +28,6 @@ node {
 					[$class: 'LocalBranch', localBranch: "**"]
 				],
 				submoduleCfg: []
-				]
 			])
 		}
 
